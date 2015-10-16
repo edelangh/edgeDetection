@@ -43,11 +43,11 @@ Image&  Image::operator=(const Image& img)
 void  Image::load(const std::string& img, unsigned int width, unsigned height)
 {
   std::ifstream   in(img.c_str(), std::ifstream::in | std::ifstream::binary);
-  if (Image::verbose)
-    std::cout << "[Image] Open: " << img << std::endl;
 
-  if (in.fail())
+  if (in.fail() || !in.is_open())
     throw std::logic_error("[Image] Can't open :" + img);
+  else if (Image::verbose)
+    std::cout << "[Image] Open: " << img << std::endl;
   if (width || height)
   {
     width_ = width;
@@ -64,3 +64,4 @@ unsigned int  Image::get_height(void) const { return (height_); }
 std::string   Image::get_src() const { return (src_.c_str()); }
 char*         Image::get_data() const { return (data_); }
 unsigned int  Image::size() const { return (width_ * height_); }
+unsigned int  Image::get_pixel(unsigned int x, unsigned int y) const { return (data_[x + y * width_]); }

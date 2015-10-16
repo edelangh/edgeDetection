@@ -1,4 +1,3 @@
-
 #ifndef __IMAGE_H__
 # define __IMAGE_H__
 
@@ -22,6 +21,7 @@ public:
   std::string   get_src() const;
   char*         get_data() const;
   unsigned int  size() const;
+  unsigned int  get_pixel(unsigned int x, unsigned int y) const;
 protected:
   unsigned int  width_;
   unsigned int  height_;
