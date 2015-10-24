@@ -17,6 +17,7 @@ typedef struct s_img2
 // jai juste pas envie de me faire chier
 
 t_kernel*	load_kernel(char *src);
+void		kernel_destroy(t_kernel* k);
 void		apply_kernel(t_img2 *i, t_kernel* k);
 
 t_img2*		img2_create(int width, int height);

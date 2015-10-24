@@ -18,6 +18,7 @@ t_kernel*	load_kernel(char *src)
 		return (NULL);
 	height = 0;
 	width = 0;
+	k = malloc(sizeof(t_kernel));
 	k->ddata = malloc(sizeof(double) * MAX_KERNEL_SIZE);
 	while (get_next_line(fd, &line) > 0)
 	{
@@ -30,12 +31,19 @@ t_kernel*	load_kernel(char *src)
 		}
 		free(tab);
 		free(line);
-		if (width)
+		if (i)
 			++height;
-		else
+		if (!width)
 			width = i;
 	}
 	k->width = width;
 	k->height = height;
 	close(fd);
+	return (k);
+}
+
+void	kernel_destroy(t_kernel* k)
+{
+	free(k->ddata);
+	free(k);
 }
