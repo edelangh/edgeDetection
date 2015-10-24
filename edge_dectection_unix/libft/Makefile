@@ -1,7 +1,7 @@
 # var
 CC = gcc
 NAME = libft.a
-CFLAGS = -Werror -Wextra -Wall -I ../minilibx -L ../minilibx
+CFLAGS = -Werror -Wextra -Wall -I ../minilibx
 OBJDIR = obj/
 HEADERDIR = .
 INCLUDES_DIR = includes

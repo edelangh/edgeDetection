@@ -1,7 +1,20 @@
 # var
 CC = gcc
 NAME = edge
-CFLAGS = -lm -I minilibx -L minilibx -lmlx -L /usr/X11/lib -lX11 -lXext
+UNAME_S := $(shell uname -s)
+CFLAGS = -Wall -Wextra -Werror
+
+ifeq ($(UNAME_S),Linux)
+LIB = -lm -L minilibx -lmlx -L /usr/X11/lib -lX11 -lXext \
+		-L libft -lft
+INCLUDES = -I libft/includes -I minilibx
+endif
+ifeq ($(UNAME_S),Darwin)
+INCLUDES = -I libft/includes -I /usr/include/
+LIB = -I /usr/include/mlx.h -L/usr/local/lib -lmlx -framework OPENGL -framework AppKit \
+		-L libft -lft
+endif
+
 OBJDIR = obj/
 HEADERDIR = .
 SRCS = main.c \
@@ -17,17 +30,16 @@ SRCS = main.c \
 
 HEADER = edge_detection.h
 OBJS = $(addprefix $(OBJDIR),$(subst .c,.o,$(SRCS)))
-INCLUDES = -I libft/includes minilibx/mlx.a
 
 .PHONY: all clean fclean re proper libft
 
 all: libft $(NAME)
 
 $(NAME): libft/libft.a $(OBJS) $(HEADER)
-	$(CC) $(OBJS) -o $(NAME) $(INCLUDES) -L libft -lft $(CFLAGS)
+	$(CC) $(CFLAGS) $(INCLUDES) $(LIB) $(INC) $(OBJS) -o $(NAME)
 
 debug: clean libft/libft.a $(OBJS) $(HEADER)
-	$(CC) $(CFLAGS) $(OBJS) -g -o $(NAME) $(INCLUDES) -L libft -lft
+	$(CC) $(CFLAGS) $(INCLUDES) $(LIB) $(INC) $(OBJS) -o $(NAME) -g
 
 libft:
 	make -C libft
@@ -35,7 +47,7 @@ libft:
 $(OBJS): | $(OBJDIR)
 
 $(OBJDIR)%.o : %.c $(HEADER)
-	$(CC) -c $(CFLAGS) $< -o $@ $(INCLUDES)
+	$(CC) -c $< -o $@ $(INCLUDES)
 
 $(OBJDIR):
 	@if [ ! -d "$(OBJDIR)" ]; then \

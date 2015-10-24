@@ -57,8 +57,7 @@ void	put_color(t_list *lst, int fd)
 	t_color_code	*c;
 	int				len;
 
-	if (lst)
-		len = ft_strlen(((t_color_code*)lst->content)->code);
+	len = ft_strlen(((t_color_code*)lst->content)->code);
 	if (len == 1)
 		while (lst)
 		{
@@ -121,7 +120,7 @@ int		ft_export_xpm(t_img *i, char *name)
 	nb = make_color_list(i, &color);
 	dprintf(fd, "/* XPM */\nstatic char *%s[] = {\n", name);
 	dprintf(fd, "\"%d %d %d %d \",\n", i->width, i->height, nb,
-				ft_strlen(((t_color_code*)color->content)->code));
+			((int)ft_strlen(((t_color_code*)color->content)->code)));
 	put_color(color, fd);
 	put_each_pixel(i, color, fd);
 	close(fd);

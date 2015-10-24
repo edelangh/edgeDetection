@@ -1,6 +1,7 @@
 
 #include "edge_detection.h"
 #include <math.h>
+#include "mlx_key.h"
 
 int	draw(t_env *e)
 {
@@ -29,27 +30,27 @@ int	draw(t_env *e)
 int	key(int key, t_env *e)
 {
   dprintf(1, "key: %d\n", key);
-  if (key == 65307)
+  if (key == KEY_ESCAPE)
 	exit(dprintf(2, "exit\n"));
-  else if (key == '1')
+  else if (key == KEY_1)
 	e->lightness = (e->lightness + 1) % 4;
-  else if (key == '2')
+  else if (key == KEY_2)
 	e->gaussian = fmod((e->gaussian + 0.5), 5.5);
-  else if (key == '3')
+  else if (key == KEY_3)
 	e->sobel_intensity = (e->sobel_intensity + 1) % 4;
-  else if (key == '4')
+  else if (key == KEY_4)
 	e->luminance = !e->luminance;
-  else if (key == '5')
+  else if (key == KEY_5)
 	e->average = !e->average;
-  else if (key == '6')
+  else if (key == KEY_6)
 	e->contrast = (e->contrast == 0 ? 255 : e->contrast >> 1);
-  else if (key == '7')
+  else if (key == KEY_7)
 	e->contrast_rgb = (e->contrast_rgb == 0 ? 255 : e->contrast_rgb >> 1);
-  else if (key == '8')
+  else if (key == KEY_8)
 	e->contrast_intensity = (e->contrast_intensity + 1) % 4;
-  else if (key == '9')
+  else if (key == KEY_9)
 	e->harris_intensity = !e->harris_intensity * 6;
-  else if (key == '0')
+  else if (key == KEY_0)
   {
 	e->lightness = 0;
 	e->gaussian = 0;
