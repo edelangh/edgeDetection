@@ -24,10 +24,10 @@ INCLUDES = -I libft/includes minilibx/mlx.a
 all: libft $(NAME)
 
 $(NAME): libft/libft.a $(OBJS) $(HEADER)
-	gcc $(OBJS) -o $(NAME) $(INCLUDES) -L libft -lft $(CFLAGS)
+	$(CC) $(OBJS) -o $(NAME) $(INCLUDES) -L libft -lft $(CFLAGS)
 
 debug: clean libft/libft.a $(OBJS) $(HEADER)
-	gcc $(CFLAGS) $(OBJS) -g -o $(NAME) $(INCLUDES) -L libft -lft
+	$(CC) $(CFLAGS) $(OBJS) -g -o $(NAME) $(INCLUDES) -L libft -lft
 
 libft:
 	make -C libft
