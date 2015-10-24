@@ -5,8 +5,7 @@ UNAME_S := $(shell uname -s)
 CFLAGS = -Wall -Wextra -Werror
 
 ifeq ($(UNAME_S),Linux)
-LIB = -lm -L minilibx -lmlx -L /usr/X11/lib -lX11 -lXext \
-		-L libft -lft
+LIB = -lm -L libft -lft -L minilibx -lmlx -L /usr/X11/lib -lX11 -lXext
 INCLUDES = -I libft/includes -I minilibx
 endif
 ifeq ($(UNAME_S),Darwin)
