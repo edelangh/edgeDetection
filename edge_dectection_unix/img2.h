@@ -24,7 +24,12 @@ t_img2*		img2_create(int width, int height);
 void		img2_destroy(t_img2* i);
 void		img2_copy_img(t_img2* dst, t_img* src);
 void		img_copy_img2(t_img* dst, t_img2* src);
+void		img2_copy_img2(t_img2* dst, t_img2* src);
 void		img2_rgb2gray(t_img2* i);
 void		img2_gray2rgb(t_img2* i);
 
+void		img2_mult_img2(t_img2* dst, t_img2* a, t_img2* b);
+void		img2_div_img2(t_img2* dst, t_img2* a, t_img2* b);
+void		img2_add_img2(t_img2* dst, t_img2* a, t_img2* b);
+void		img2_sub_img2(t_img2* dst, t_img2* a, t_img2* b);
 #endif

@@ -42,6 +42,18 @@ void		img_copy_img2(t_img* dst, t_img2* src)
 	}
 }
 
+void		img2_copy_img2(t_img2* dst, t_img2* src)
+{
+	int	x, y;
+	for (y = 0; y < src->height; ++y)
+	{
+		for  (x = 0; x < src->width; ++x)
+		{
+			dst->ddata[y * dst->width + x] = src->ddata[y * src->width + x];
+		}
+	}
+}
+
 void		img2_rgb2gray(t_img2* i)
 {
 	unsigned int	c;
@@ -75,6 +87,62 @@ void		img2_gray2rgb(t_img2* i)
 			else
 				c = d;
 			i->ddata[y * i->width + x] = c * (0xFFFFFF / 0xFF);
+		}
+	}
+}
+
+void		img2_mult_img2(t_img2* dst, t_img2* a, t_img2* b)
+{
+	int	x, y;
+	for (y = 0; y < dst->height; ++y)
+	{
+		for (x = 0; x < dst->width; ++x)
+		{
+			dst->ddata[y * dst->width + x]
+			= a->ddata[y * a->width + x]
+			* b->ddata[y * b->width + x];
+		}
+	}
+}
+
+void		img2_div_img2(t_img2* dst, t_img2* a, t_img2* b)
+{
+	int	x, y;
+	for (y = 0; y < dst->height; ++y)
+	{
+		for (x = 0; x < dst->width; ++x)
+		{
+			dst->ddata[y * dst->width + x]
+			= a->ddata[y * a->width + x]
+			/ b->ddata[y * b->width + x];
+		}
+	}
+}
+
+void		img2_add_img2(t_img2* dst, t_img2* a, t_img2* b)
+{
+	int	x, y;
+	for (y = 0; y < dst->height; ++y)
+	{
+		for (x = 0; x < dst->width; ++x)
+		{
+			dst->ddata[y * dst->width + x]
+			= a->ddata[y * a->width + x]
+			+ b->ddata[y * b->width + x];
+		}
+	}
+}
+
+void		img2_sub_img2(t_img2* dst, t_img2* a, t_img2* b)
+{
+	int	x, y;
+	for (y = 0; y < dst->height; ++y)
+	{
+		for (x = 0; x < dst->width; ++x)
+		{
+			dst->ddata[y * dst->width + x]
+			= a->ddata[y * a->width + x]
+			- b->ddata[y * b->width + x];
 		}
 	}
 }
