@@ -38,7 +38,7 @@ OBJS = $(addprefix $(OBJDIR),$(subst .c,.o,$(SRCS)))
 all: libft $(NAME)
 
 $(NAME): libft/libft.a $(OBJS) $(HEADER)
-	$(CC) $(CFLAGS) $(INCLUDES) $(LIB) $(INC) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(INCLUDES) $(LIB)
 
 debug: clean libft/libft.a $(OBJS) $(HEADER)
 	$(CC) $(CFLAGS) $(INCLUDES) $(LIB) $(INC) $(OBJS) -o $(NAME) -g

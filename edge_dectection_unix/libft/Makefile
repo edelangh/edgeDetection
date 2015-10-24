@@ -1,12 +1,11 @@
 # var
 CC = gcc
 NAME = libft.a
-CFLAGS = -Werror -Wextra -Wall -I ../minilibx
+CFLAGS = -Werror -Wextra -Wall
 OBJDIR = obj/
-HEADERDIR = .
-INCLUDES_DIR = includes
-INCLUDES = $(INCLUDES_DIR)/libft.h $(INCLUDES_DIR)/ft_printf.h \
-		   $(INCLUDES_DIR)/ft_mlx.h $(INCLUDES_DIR)/get_next_line.h
+HEADERS = includes/libft.h includes/ft_printf.h \
+		   includes/ft_mlx.h includes/get_next_line.h
+INCLUDES = -I includes -I ../minilibx
 SRCS = ft_atoi.c \
 	ft_bzero.c \
 	ft_isalnum.c \
@@ -127,7 +126,7 @@ OBJS = $(addprefix $(OBJDIR),$(subst .c,.o,$(SRCS)))
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(INCLUDES)
+$(NAME): $(OBJS)
 	ar r $@ $(OBJS)
 	ranlib $@
 
@@ -136,8 +135,8 @@ printf/libftprintf.a:
 
 $(OBJS): | $(OBJDIR)
 
-$(OBJDIR)%.o : %.c $(INCLUDES)
-	$(CC) -c $(CFLAGS) -I $(INCLUDES_DIR) $< -o $@
+$(OBJDIR)%.o : %.c $(HEADERS)
+	$(CC) -c $(CFLAGS) $(INCLUDES) $< -o $@
 
 $(OBJDIR):
 	@if [ ! -d "$(OBJDIR)" ]; then \
@@ -154,10 +153,3 @@ fclean: clean
 proper: all clean
 
 re: fclean all
-
-test: $(NAME)
-	@[ "$(MAIN_TEST)" ] || \
-		echo "You have to set MAIN_TEST (and ARGV)";
-	@[ "$(MAIN_TEST)" ] && $(CC) $(MAIN_TEST) libft.a \
-		-o  $(subst .c,.out,$(MAIN_TEST)) -I$(HEADERDIR)
-	@[ "$(MAIN_TEST)" ] && ./$(subst .c,.out,$(MAIN_TEST)) $(ARGV)
