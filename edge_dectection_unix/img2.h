@@ -24,5 +24,7 @@ t_img2*		img2_create(int width, int height);
 void		img2_destroy(t_img2* i);
 void		img2_copy_img(t_img2* dst, t_img* src);
 void		img_copy_img2(t_img* dst, t_img2* src);
+void		img2_rgb2gray(t_img2* i);
+void		img2_gray2rgb(t_img2* i);
 
 #endif

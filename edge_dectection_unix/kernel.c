@@ -2,6 +2,8 @@
 #include "img2.h"
 #include <fcntl.h>
 #include <libft.h>
+#include <unistd.h>
+#include "get_next_line.h"
 
 t_kernel*	load_kernel(char *src)
 {

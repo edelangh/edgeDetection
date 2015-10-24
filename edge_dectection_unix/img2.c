@@ -41,3 +41,40 @@ void		img_copy_img2(t_img* dst, t_img2* src)
 		}
 	}
 }
+
+void		img2_rgb2gray(t_img2* i)
+{
+	unsigned int	c;
+	int				x, y;
+
+	for (y = 0; y < i->height; ++y)
+	{
+		for  (x = 0; x < i->width; ++x)
+		{
+			c = i->ddata[y * i->width + x];
+			i->ddata[y * i->width + x] = (((c >> 16) & 0xFF) + ((c >> 8) & 0xFF) + (c & 0xFF)) / 3;
+		}
+	}
+}
+
+void		img2_gray2rgb(t_img2* i)
+{
+	unsigned int	c;
+	double 			d;
+	int				x, y;
+
+	for (y = 0; y < i->height; ++y)
+	{
+		for  (x = 0; x < i->width; ++x)
+		{
+			d = i->ddata[y * i->width + x];
+			if (d <= 0)
+				c = 0;
+			else if (d >= 0xFF)
+				c = 0xFF;
+			else
+				c = d;
+			i->ddata[y * i->width + x] = c * (0xFFFFFF / 0xFF);
+		}
+	}
+}

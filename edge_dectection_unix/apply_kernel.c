@@ -8,7 +8,9 @@ void apply_kernel(t_img2 *img, t_kernel* k)
 	int x2;
 	int	y2;
 	double c;
+	double*		out;
 
+	out = malloc(sizeof(double) * img->width * img->height);
 	int	x, y, j, i;
 	for (y = 0; y < img->height; ++y)
 	{
@@ -28,7 +30,9 @@ void apply_kernel(t_img2 *img, t_kernel* k)
 						* k->ddata[j * k->width + i];
 				}
 			}
-			img->ddata[y * img->width + x] = c;
+			out[y * img->width + x] = c;
 		}
 	}
+	free(img->ddata);
+	img->ddata = out;
 }

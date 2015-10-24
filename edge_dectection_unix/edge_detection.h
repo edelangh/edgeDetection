@@ -9,8 +9,8 @@
 # include <string.h>
 # include <stdio.h>
 
-# define WIN_WIDTH 400
-# define WIN_HEIGHT 400
+# define WIN_WIDTH 800
+# define WIN_HEIGHT 800
 # define WIN_TITLE "edge_detection"
 
 typedef struct	s_env
