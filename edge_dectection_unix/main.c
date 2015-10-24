@@ -4,24 +4,37 @@
 
 int	draw(t_env *e)
 {
+  t_kernel*	k;
+  t_img2*	i2;
+
   ft_memcpy_uint(e->tmp->udata, e->img->udata, e->img->width * e->img->height);
-/*  if (e->contrast_rgb > 0)
-	contrast_rgb(e->tmp, e->contrast_rgb - 1);
-  if (e->luminance)
-	luminance(e->tmp);
-  if (e->average)
-	average(e->tmp);
-  if (e->contrast > 0)
-	contrast(e->tmp, e->contrast - 1);
-  lightness(e->tmp, e->lightness);
-  gaussian(e->tmp, e->gaussian);
-  if (e->contrast_intensity > 0)
-	apply_contrast_kernel(e, e->tmp, e->contrast_intensity);
-  if (e->sobel_intensity > 0)
-	apply_sobel_kernel(e, e->tmp, e->sobel_intensity);
-  if (e->harris_intensity > 0)
-     harris_kernel(e, e->tmp, e->harris_intensity);
-*/
+  k = load_kernel("kernel/gaussian_5x5");
+  i2 = img2_create(e->tmp->width, e->tmp->height);
+  img2_copy_img(i2, e->tmp);
+
+  apply_kernel(i2, k);
+
+  img_copy_img2(e->tmp, i2);
+  kernel_destroy(k);
+  img2_destroy(i2);
+  /*
+	 if (e->contrast_rgb > 0)
+	 contrast_rgb(e->tmp, e->contrast_rgb - 1);
+	 if (e->luminance)
+	 luminance(e->tmp);
+	 if (e->average)
+	 average(e->tmp);
+	 if (e->contrast > 0)
+	 contrast(e->tmp, e->contrast - 1);
+	 lightness(e->tmp, e->lightness);
+	 gaussian(e->tmp, e->gaussian);
+	 if (e->contrast_intensity > 0)
+	 apply_contrast_kernel(e, e->tmp, e->contrast_intensity);
+	 if (e->sobel_intensity > 0)
+	 apply_sobel_kernel(e, e->tmp, e->sobel_intensity);
+	 if (e->harris_intensity > 0)
+	 harris_kernel(e, e->tmp, e->harris_intensity);
+   */
   mlx_put_image_to_window(e->mlx, e->win, e->img->img, 0, 0);
   mlx_put_image_to_window(e->mlx, e->win, e->tmp->img, WIN_WIDTH, 0);
   return (1);
@@ -67,19 +80,19 @@ int	key(int key, t_env *e)
 	ft_export_xpm(e->tmp, "test.xpm");
 	exit(1);
   }
-else if (key == 'h')
-{
+  else if (key == 'h')
+  {
 	printf(""
-	"1: lightness\n"
-	"2: gaussian\n"
-	"3: sobel_intensity\n"
-	"4: luminance\n"
-	"5: average\n"
-	"6: contrast\n"
-	"7: contrast_rgb\n"
-	"8: contrast_intensity\n"
-	"9: harris_intensity\n");
-}
+		"1: lightness\n"
+		"2: gaussian\n"
+		"3: sobel_intensity\n"
+		"4: luminance\n"
+		"5: average\n"
+		"6: contrast\n"
+		"7: contrast_rgb\n"
+		"8: contrast_intensity\n"
+		"9: harris_intensity\n");
+  }
   dprintf(1, "l:%d/3 g:%f/5 s:%d/3 l:%d a:%d c_gris:%d/255 c_rgb:%d/255 c:%d/3 h:%d\n"
 	  , e->lightness, e->gaussian
 	  , e->sobel_intensity, e->luminance

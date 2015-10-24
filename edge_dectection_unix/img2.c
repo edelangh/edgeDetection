@@ -41,5 +41,3 @@ void		img_copy_img2(t_img* dst, t_img2* src)
 		}
 	}
 }
-
-

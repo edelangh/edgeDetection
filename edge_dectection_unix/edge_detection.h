@@ -5,8 +5,9 @@
 
 # include "libft.h"
 # include "ft_mlx.h"
+# include "img2.h"
 # include <string.h>
-#include <stdio.h>
+# include <stdio.h>
 
 # define WIN_WIDTH 400
 # define WIN_HEIGHT 400
