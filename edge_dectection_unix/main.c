@@ -6,7 +6,7 @@
 int	draw(t_env *e)
 {
   ft_memcpy_uint(e->tmp->udata, e->img->udata, e->img->width * e->img->height);
-  if (e->contrast_rgb > 0)
+/*  if (e->contrast_rgb > 0)
 	contrast_rgb(e->tmp, e->contrast_rgb - 1);
   if (e->luminance)
 	luminance(e->tmp);
@@ -22,6 +22,7 @@ int	draw(t_env *e)
 	apply_sobel_kernel(e, e->tmp, e->sobel_intensity);
   if (e->harris_intensity > 0)
      harris_kernel(e, e->tmp, e->harris_intensity);
+*/
   mlx_put_image_to_window(e->mlx, e->win, e->img->img, 0, 0);
   mlx_put_image_to_window(e->mlx, e->win, e->tmp->img, WIN_WIDTH, 0);
   return (1);

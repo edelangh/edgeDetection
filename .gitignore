@@ -3,7 +3,6 @@
 Debug/*
 *.opensdf
 *.sdf
-
 *.raw
 
 # Compiled Object files

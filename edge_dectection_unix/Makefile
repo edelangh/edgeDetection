@@ -26,7 +26,9 @@ SRCS = main.c \
 	average.c \
 	contrast.c \
 	tools.c \
-	corner.c
+	corner.c \
+	img2.c \
+	kernel.c
 
 HEADER = edge_detection.h
 OBJS = $(addprefix $(OBJDIR),$(subst .c,.o,$(SRCS)))
