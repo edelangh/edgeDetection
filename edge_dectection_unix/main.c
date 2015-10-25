@@ -58,10 +58,11 @@ void	harris2(t_img* tmp)
   img2_sub_img2(cim, cim, ixy);
   // (Ix2 + Iy2 + eps)
   img2_add_img2(ix, ix, iy);
+  img2_add(ix, EPS);
   // cim = (Ix2.*Iy2 - Ixy.^2)./(Ix2 + Iy2 + eps); % Harris corner measure
   img2_div_img2(cim, cim, ix);
 
-	img2_ceuil(cim, 10000);
+  img2_ceuil(cim, 3000);
   img2_gray2rgb(cim);
   img_copy_img2(tmp, cim);
 

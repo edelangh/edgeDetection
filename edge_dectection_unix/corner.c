@@ -5,7 +5,6 @@
 #define sigma 1
 //thresh 1000
 #define thresh 1000
-#define EPS 2.22e-16
 
 static void  init_ix(double *ix, t_img* i)
 {

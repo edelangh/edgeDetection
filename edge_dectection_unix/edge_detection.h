@@ -13,6 +13,8 @@
 # define WIN_HEIGHT 400
 # define WIN_TITLE "edge_detection"
 
+#define EPS 2.22e-16
+
 typedef struct	s_env
 {
 	void	*mlx;

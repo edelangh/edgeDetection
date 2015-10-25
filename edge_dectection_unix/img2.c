@@ -146,3 +146,15 @@ void		img2_sub_img2(t_img2* dst, t_img2* a, t_img2* b)
 		}
 	}
 }
+
+void		img2_add(t_img2* dst, double a)
+{
+	int	x, y;
+	for (y = 0; y < dst->height; ++y)
+	{
+		for (x = 0; x < dst->width; ++x)
+		{
+			dst->ddata[y * dst->width + x] += a;
+		}
+	}
+}

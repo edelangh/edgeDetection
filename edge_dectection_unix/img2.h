@@ -32,4 +32,6 @@ void		img2_mult_img2(t_img2* dst, t_img2* a, t_img2* b);
 void		img2_div_img2(t_img2* dst, t_img2* a, t_img2* b);
 void		img2_add_img2(t_img2* dst, t_img2* a, t_img2* b);
 void		img2_sub_img2(t_img2* dst, t_img2* a, t_img2* b);
+
+void		img2_add(t_img2* dst, double a);
 #endif
