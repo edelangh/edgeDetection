@@ -3,6 +3,15 @@
 Debug/*
 *.opensdf
 *.sdf
+*.log
+*.idb
+*.bdp
+*.pdb
+
+*.tlog
+
+.vs
+
 *.raw
 
 # Compiled Object files
