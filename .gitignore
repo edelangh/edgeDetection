@@ -3,6 +3,14 @@
 Debug/*
 *.opensdf
 *.sdf
+*.log
+*.idb
+*.bdp
+*.pdb
+
+*.tlog
+
+.vs
 
 *.raw
 
