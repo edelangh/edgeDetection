@@ -7,26 +7,26 @@ class Image
 {
 public:
 
-  static bool verbose;
+	static bool verbose;
 
-  Image(const std::string& src, unsigned int width = 0, unsigned height = 0);
-  Image(const Image& img);
-  ~Image(void);
-  Image&  operator=(const Image& img);
+	Image(const std::string& src, unsigned int width = 0, unsigned height = 0);
+	Image(const Image& img);
+	~Image(void);
+	Image&  operator=(const Image& img);
 
-  void  load(const std::string& img, unsigned int width = 0, unsigned height = 0);
+	void  load(const std::string& img, unsigned int width = 0, unsigned height = 0);
 
-  unsigned int  get_width(void) const;
-  unsigned int  get_height(void) const;
-  std::string   get_src() const;
-  char*         get_data() const;
-  unsigned int  size() const;
-  unsigned int  get_pixel(unsigned int x, unsigned int y) const;
+	unsigned int  get_width(void) const;
+	unsigned int  get_height(void) const;
+	std::string   get_src() const;
+	char*         get_data() const;
+	unsigned int  size() const;
+	unsigned int  get_pixel(unsigned int x, unsigned int y) const;
 protected:
-  unsigned int  width_;
-  unsigned int  height_;
-  std::string   src_;
-  char*         data_;
+	unsigned int  width_;
+	unsigned int  height_;
+	std::string   src_;
+	char*         data_;
 private:
 };
 

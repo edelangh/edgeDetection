@@ -11,6 +11,12 @@
 #include <gl\glu.h>			// Header File For The GLu32 Library
 #include <tchar.h>		// Header File For The Glaux Library
 
+#include <iostream>
+
+#include "tools.h"
+#include "main_draw.h"
+#include "const.h"
+
 HDC			hDC = NULL;		// Private GDI Device Context
 HGLRC		hRC = NULL;		// Permanent Rendering Context
 HWND		hWnd = NULL;		// Holds Our Window Handle
@@ -20,20 +26,17 @@ bool	keys[256];			// Array Used For The Keyboard Routine
 bool	active = TRUE;		// Window Active Flag Set To TRUE By Default
 bool	fullscreen = TRUE;	// Fullscreen Flag Set To Fullscreen Mode By Default
 
-GLuint text_id;
-unsigned __int8 screenData[100][100][3];
+GLuint			text_id;
+unsigned __int8 screenData[WIN_HEIGHT][WIN_WIDTH][3];
 
-
-GLuint					load_tga_texture(const char *filename);
+GLuint			load_tga_texture(const char *filename);
 
 LRESULT	CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);	// Declaration For WndProc
 
 GLvoid ReSizeGLScene(GLsizei width, GLsizei height)		// Resize And Initialize The GL Window
 {
 	if (height == 0)										// Prevent A Divide By Zero By
-	{
 		height = 1;										// Making Height Equal One
-	}
 
 	glViewport(0, 0, width, height);						// Reset The Current Viewport
 
@@ -41,7 +44,7 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height)		// Resize And Initialize Th
 	glLoadIdentity();									// Reset The Projection Matrix
 
 														// Calculate The Aspect Ratio Of The Window
-	gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, 0.1f, 100.0f);
+	// gluPerspective(45.0f, (GLfloat)width / (GLfloat)height, 0.1f, 100.0f);
 
 	glMatrixMode(GL_MODELVIEW);							// Select The Modelview Matrix
 	glLoadIdentity();									// Reset The Modelview Matrix
@@ -51,16 +54,9 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 {
 	// text_id = load_tga_texture("C:\\Users\\Eric\\Work\\edgeDetection\\Debug\\fondJeu.tga");
 
-	for (int y = 0; y < 100; ++y)
-		for (int x = 0; x < 100; ++x)
-		{
-			screenData[x][y][0] = (x + y) % 255;
-			screenData[x][y][1] = (x + y) % 255;
-			screenData[x][y][2] = (x + y) % 255;
-		}
-
-	// Create a texture 
-	glTexImage2D(GL_TEXTURE_2D, 0, 3, 100, 100, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*)screenData);
+	std::cout << "100%" << std::endl;
+	// Create a texture
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, WIN_WIDTH, WIN_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*)screenData);
 
 	// Set up the texture
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -70,28 +66,29 @@ int InitGL(GLvoid)										// All Setup For OpenGL Goes Here
 
 	// Enable textures
 	glEnable(GL_TEXTURE_2D);
-//	glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
-//	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);				// Black Background
-//	glClearDepth(1.0f);									// Depth Buffer Setup
-//	glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
-//	glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
-//	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
+	//	glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
+	//	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);				// Black Background
+	//	glClearDepth(1.0f);									// Depth Buffer Setup
+	//	glEnable(GL_DEPTH_TEST);							// Enables Depth Testing
+	//	glDepthFunc(GL_LEQUAL);								// The Type Of Depth Testing To Do
+	//	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);	// Really Nice Perspective Calculations
 	return TRUE;										// Initialization Went OK
 }
 
 int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
-	glLoadIdentity();	
+	glLoadIdentity();
 	glEnable(GL_TEXTURE_2D);// Reset The Current Modelview Matrix
 
-	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 100, 100, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*)screenData);
+	main_draw(&screenData, WIN_HEIGHT, WIN_WIDTH);
+	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, WIN_WIDTH, WIN_HEIGHT, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*)screenData);
 	// glBindTexture(GL_TEXTURE_2D, text_id);
 	glBegin(GL_QUADS);
-	glTexCoord2d(0, 1);  glVertex3d(1, 1, -1);
-	glTexCoord2d(0, 0);  glVertex3d(1, -1, -1);
-	glTexCoord2d(1, 0);  glVertex3d(-1, -1, -1);
-	glTexCoord2d(1, 1);  glVertex3d(-1, 1, -1);
+	glTexCoord2d(0, 0);  glVertex3d(-1, 1, -1);
+	glTexCoord2d(1, 0);  glVertex3d(1, 1, -1);
+	glTexCoord2d(1, 1);  glVertex3d(1, -1, -1);
+	glTexCoord2d(0, 1);  glVertex3d(-1, -1, -1);
 	glEnd();
 
 	glDisable(GL_TEXTURE_2D);
@@ -177,6 +174,7 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, bool fullscree
 		MessageBox(NULL, _T("Failed To Register The Window Class."), _T("ERROR"), MB_OK | MB_ICONEXCLAMATION);
 		return FALSE;											// Return FALSE
 	}
+	showWin32Console();
 
 	if (fullscreen)												// Attempt Fullscreen Mode?
 	{
@@ -253,7 +251,7 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, bool fullscree
 		0,											// Shift Bit Ignored
 		0,											// No Accumulation Buffer
 		0, 0, 0, 0,									// Accumulation Bits Ignored
-		16,											// 16Bit Z-Buffer (Depth Buffer)  
+		16,											// 16Bit Z-Buffer (Depth Buffer)
 		0,											// No Stencil Buffer
 		0,											// No Auxiliary Buffer
 		PFD_MAIN_PLANE,								// Main Drawing Layer
@@ -381,7 +379,7 @@ int WINAPI WinMain(HINSTANCE	hInstance,			// Instance
 	BOOL	done = FALSE;								// Bool Variable To Exit Loop
 
 														// Ask The User Which Screen Mode They Prefer
-	if (MessageBox(NULL, _T("Would You Like To Run In Fullscreen Mode?"), _T("Start FullScreen?"), MB_YESNO | MB_ICONQUESTION) == IDNO)
+	//if (MessageBox(NULL, _T("Would You Like To Run In Fullscreen Mode?"), _T("Start FullScreen?"), MB_YESNO | MB_ICONQUESTION) == IDNO)
 	{
 		fullscreen = FALSE;							// Windowed Mode
 	}
@@ -391,7 +389,6 @@ int WINAPI WinMain(HINSTANCE	hInstance,			// Instance
 	{
 		return 0;									// Quit If Window Was Not Created
 	}
-
 	while (!done)									// Loop That Runs While done=FALSE
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))	// Is There A Message Waiting?

@@ -25,7 +25,6 @@ class BadTGAFormat
 	}
 };
 
-
 typedef struct	s_gl_texture
 {
 	GLint		width;
@@ -40,7 +39,7 @@ typedef struct	s_gl_texture
 #define PACK( __Declaration__ ) __pragma( pack(push, 1) ) __Declaration__ __pragma( pack(pop) )
 
 PACK(
-typedef struct			s_tga_header
+	typedef struct			s_tga_header
 {
 	unsigned char		id_length;			/* size of id field */
 	unsigned char		colormap_type;		/* 1 = color-mapped image */
@@ -59,7 +58,6 @@ typedef struct			s_tga_header
 	unsigned char		pixel_depth;		/* bits per pixel */
 	unsigned char		image_descriptor;	/* 24 bits = 0x00; 32 bits = 0x80 */
 }   t_tga_header;);
-
 
 static void		read_tga24(FILE *fp, t_gl_texture *texinfo)
 {
@@ -150,9 +148,8 @@ static void		read_tga32_rle(FILE *fp, t_gl_texture *texinfo)
 	}
 }
 
-
 static void				get_texture_info(const t_tga_header *header,
-		t_gl_texture *texinfo)
+	t_gl_texture *texinfo)
 {
 	texinfo->width = header->width;
 	texinfo->height = header->height;
@@ -191,7 +188,7 @@ static t_gl_texture		*read_tga_file(const char *filename)
 		throw new BadTGAFormat;
 
 	if (!(texinfo->texels = new GLubyte[texinfo->width
-				* texinfo->height * texinfo->internalFormat]))
+		* texinfo->height * texinfo->internalFormat]))
 	{
 		delete texinfo;
 		return NULL;
@@ -199,39 +196,39 @@ static t_gl_texture		*read_tga_file(const char *filename)
 
 	switch (header.image_type)
 	{
-		case 2: /* Uncompressed 16-24-32 bits */
-			switch (header.pixel_depth)
-			{
-				case 24:
-					read_tga24(fp, texinfo);
-					break;
-				case 32:
-					read_tga32(fp, texinfo);
-					break;
-				default:
-					throw new BadTGAFormat;
-					break;
-			}
+	case 2: /* Uncompressed 16-24-32 bits */
+		switch (header.pixel_depth)
+		{
+		case 24:
+			read_tga24(fp, texinfo);
 			break;
-
-		case 10: /* RLE compressed 16-24-32 bits */
-			switch (header.pixel_depth)
-			{
-				case 24:
-					read_tga24_rle(fp, texinfo);
-					break;
-				case 32:
-					read_tga32_rle(fp, texinfo);
-					break;
-				default:
-					throw new BadTGAFormat;
-					break;
-			}
+		case 32:
+			read_tga32(fp, texinfo);
 			break;
-
 		default:
 			throw new BadTGAFormat;
 			break;
+		}
+		break;
+
+	case 10: /* RLE compressed 16-24-32 bits */
+		switch (header.pixel_depth)
+		{
+		case 24:
+			read_tga24_rle(fp, texinfo);
+			break;
+		case 32:
+			read_tga32_rle(fp, texinfo);
+			break;
+		default:
+			throw new BadTGAFormat;
+			break;
+		}
+		break;
+
+	default:
+		throw new BadTGAFormat;
+		break;
 	}
 
 	fclose(fp);
@@ -276,7 +273,7 @@ GLuint					load_tga_texture(const char *filename)
 			//gluBuild2DMipmaps(GL_TEXTURE_2D, tga_tex->internalFormat, tga_tex->width,
 			//		tga_tex->height, tga_tex->format, GL_UNSIGNED_BYTE, tga_tex->texels);
 			glTexImage2D(GL_TEXTURE_2D, 0, tga_tex->internalFormat, tga_tex->width,
-					tga_tex->height, 0, tga_tex->format, GL_UNSIGNED_BYTE, tga_tex->texels);
+				tga_tex->height, 0, tga_tex->format, GL_UNSIGNED_BYTE, tga_tex->texels);
 
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -284,7 +281,7 @@ GLuint					load_tga_texture(const char *filename)
 
 			tex_id = tga_tex->id;
 
-			delete [] tga_tex->texels;
+			delete[] tga_tex->texels;
 			delete tga_tex;
 			_mapTga[file] = tex_id;
 		}
